@@ -1,16 +1,27 @@
+import Message from '@/app/components/messages/Message';
 import Link from 'next/link';
-import React, { use } from 'react';
+import React from 'react';
 
 const UserPage = ({ params }: { params: { username: string } }) => {
   const user = {
     username: params.username,
-    name: 'Axel Angelini',
-    bio: 'Yo soy Axel',
+    name: 'Anakin Skywalker',
+    bio: 'Vengo del planeta Tatooine',
     followersCount: 15,
     followingCount: 3,
     messages: [
-      { message: 'primer mensaje', repliesCount: 13 },
-      { message: 'Segundo mensaje', repliesCount: 5 },
+      {
+        name: 'Anakin Skywalker',
+        username: 'anakin',
+        message: 'primer mensaje',
+        repliesCount: 13,
+      },
+      {
+        name: 'Anakin Skywalker',
+        username: 'anakin',
+        message: 'Segundo mensaje',
+        repliesCount: 5,
+      },
     ],
     replies: [{ message: 'Mi respuesta', repliesCount: 0 }],
   };
@@ -19,9 +30,9 @@ const UserPage = ({ params }: { params: { username: string } }) => {
     <main className='flex flex-col bg-gray-100 p-8'>
       <section className='flex flex-col mb-8'>
         <div className='rounded-full p-6 bg-gray-300 w-20 text-center mb-4'>
-          <span className='font-semibold text-lg'>AA</span>
+          <span className='font-semibold text-lg'>AS</span>
         </div>
-        <h2 className='font-semibold text-lg mb-1'>{user.name}</h2>
+        <h2 className='mb-1'>{user.name}</h2>
         <div className='text-md mb-4 text-gray-600 cursor-pointer'>
           @<Link href={`/users/${user.username}`}>{user.username}</Link>
         </div>
@@ -46,7 +57,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
       </div>
       <div>
         {user.messages.map((message, index) => (
-          <div key={`${index}`}>{message.message}</div>
+          <Message key={`${index}`} message={message} />
         ))}
       </div>
     </main>
