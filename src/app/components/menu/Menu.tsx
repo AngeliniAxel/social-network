@@ -22,7 +22,7 @@ const Menu = ({ links }: MenuProps) => {
             </li>
           ))}
       </ul>
-      <button className='button-primary'>Post</button>
+      <button className='button-primary uppercase font-semibold'>Post</button>
     </nav>
   );
 };
