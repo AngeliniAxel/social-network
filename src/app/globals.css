@@ -12,6 +12,18 @@
     @apply font-semibold;
     @apply text-base;
   }
+
+  .button-primary {
+    @apply rounded-lg;
+    @apply bg-blue-400;
+    @apply text-white;
+    @apply px-6;
+    @apply py-2;
+  }
+
+  .button-primary:hover {
+    @apply bg-blue-500;
+  }
 }
 
 html,

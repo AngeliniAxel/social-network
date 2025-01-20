@@ -1,4 +1,4 @@
-import UserTabs from '@/app/components/messages/users/UserTabs';
+import UserTabs from '@/app/components/users/UserTabs';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
