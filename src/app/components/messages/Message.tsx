@@ -1,4 +1,5 @@
 import { MessageType } from '@/app/types/message.type';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -20,6 +21,14 @@ const Message = ({ message }: MessageProps) => {
           </div>
         </div>
         <p>{message.message}</p>
+        <div>
+          <Image
+            src='https://media.istockphoto.com/id/1302442639/photo/view-from-dune-top-over-north-sea.jpg?s=612x612&w=0&k=20&c=j7FVws1QxujyxKmJLlDHmQrwwOCmAl1mcS_9DChyDg4='
+            alt='Picture of the author'
+            width={300}
+            height={300}
+          />
+        </div>
       </div>
     </div>
   );
