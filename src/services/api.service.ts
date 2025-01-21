@@ -26,3 +26,17 @@ export const getUserMessages = async (
 
   return res.json();
 };
+
+export const getUserMessageReplies = async (
+  username: string
+): Promise<PageType<MessageType>> => {
+  const res = await fetch(
+    `${API_PUBLIC_URL}/users/${username}/messages/replies`
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to retrieve user messages');
+  }
+
+  return res.json();
+};

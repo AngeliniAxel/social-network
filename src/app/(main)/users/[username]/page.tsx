@@ -2,11 +2,22 @@ import UserTabs from '@/app/components/users/UserTabs';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { getUserData, getUserMessages } from '@/services/api.service';
+import {
+  getUserData,
+  getUserMessageReplies,
+  getUserMessages,
+} from '@/services/api.service';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
-  const user = await getUserData(params.username);
-  const userMessages = await getUserMessages(params.username);
+  const userPromise = getUserData(params.username);
+  const userMessagesPromise = getUserMessages(params.username);
+  const userMessageRepliesPromise = getUserMessageReplies(params.username);
+
+  const [user, userMessages, userMessageReplies] = await Promise.all([
+    userPromise,
+    userMessagesPromise,
+    userMessageRepliesPromise,
+  ]);
 
   return (
     <main className='flex flex-col bg-gray-100 p-8'>
@@ -37,7 +48,10 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         </div>
       </section>
 
-      <UserTabs messages={userMessages.content} replies={[]} />
+      <UserTabs
+        messages={userMessages.content}
+        replies={userMessageReplies.content}
+      />
     </main>
   );
 };
