@@ -10,7 +10,7 @@ type MessageProps = {
 const Message = ({ message }: MessageProps) => {
   return (
     <div className='grid grid-cols-12'>
-      <div className='w-full mt-1 rounded-full text-center mb-4 block relative w-20 h-20 col-span-2 flex items-center justify-center'>
+      <div className='w-full mt-1 rounded-full text-center mb-4 relative h-20 col-span-2 flex items-center justify-center'>
         <Image
           className='rounded-full'
           src={message.user.photoUrl}
