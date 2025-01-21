@@ -2,20 +2,11 @@ import UserTabs from '@/app/components/users/UserTabs';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { UserType } from '@/app/types/user.types';
-
-const getUserData = async (username: string): Promise<UserType> => {
-  const res = await fetch(`http://localhost:8080/api/public/users/${username}`);
-
-  if (!res.ok) {
-    throw new Error('Failed to retrieve user');
-  }
-
-  return res.json();
-};
+import { getUserData, getUserMessages } from '@/services/api.service';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
   const user = await getUserData(params.username);
+  const userMessages = await getUserMessages(params.username);
 
   return (
     <main className='flex flex-col bg-gray-100 p-8'>
@@ -46,7 +37,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         </div>
       </section>
 
-      <UserTabs messages={[]} replies={[]} />
+      <UserTabs messages={userMessages.content} replies={[]} />
     </main>
   );
 };

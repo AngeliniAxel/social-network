@@ -9,26 +9,27 @@ type MessageProps = {
 
 const Message = ({ message }: MessageProps) => {
   return (
-    <div className='flex'>
-      <div className='rounded-full p-5 bg-gray-300 w-16 text-center mb-4'>
-        <span className='font-semibold text-sm'>AS</span>
+    <div className='grid grid-cols-12'>
+      <div className='w-full mt-1 rounded-full text-center mb-4 block relative w-20 h-20 col-span-2 flex items-center justify-center'>
+        <Image
+          className='rounded-full'
+          src={message.user.photoUrl}
+          alt={`Picture of ${message.user}`}
+          height={60}
+          width={60}
+          priority
+        />
       </div>
-      <div className='flex flex-col ml-4 mt-2'>
+      <div className='flex flex-col ml-4 mt-2 col-span-10'>
         <div className='flex'>
-          <h3>{message.name}</h3>
+          <h3>{message.user.name}</h3>
           <div className='text-md ml-2 text-gray-600 cursor-pointer'>
-            @<Link href={`/users/${message.username}`}>{message.username}</Link>
+            <Link href={`/users/${message.user.username}`}>
+              {message.user.username}
+            </Link>
           </div>
         </div>
         <p>{message.message}</p>
-        <div>
-          <Image
-            src='https://media.istockphoto.com/id/1302442639/photo/view-from-dune-top-over-north-sea.jpg?s=612x612&w=0&k=20&c=j7FVws1QxujyxKmJLlDHmQrwwOCmAl1mcS_9DChyDg4='
-            alt='Picture of the author'
-            width={300}
-            height={300}
-          />
-        </div>
       </div>
     </div>
   );
