@@ -1,15 +1,32 @@
 import { TrendingUserType, UserType } from '@/app/types/user.types';
 import Image from 'next/image';
 import Link from 'next/link';
+import { PropsWithChildren } from 'react';
 
-type UserCardProps = {
-  user: TrendingUserType | UserType;
+export enum UserCardLayout {
+  HORIZONTAL,
+  VERTICAL,
+}
+
+const divClasses = {
+  [UserCardLayout.HORIZONTAL]: 'flex',
+  [UserCardLayout.VERTICAL]: 'flex flex-col',
 };
 
-const UserCard = ({ user }: UserCardProps) => {
+const linkClasses = {
+  [UserCardLayout.HORIZONTAL]: 'ml-2 text-md text-gray-600 cursor-pointer',
+  [UserCardLayout.VERTICAL]: 'text-md text-gray-600 cursor-pointer',
+};
+
+type UserCardProps = PropsWithChildren & {
+  user: TrendingUserType | UserType;
+  layout: UserCardLayout;
+};
+
+const UserCard = ({ user, layout, children }: UserCardProps) => {
   return (
     <div className='mb-4 grid grid-cols-12'>
-      <div className='w-full mt-1 rounded-full text-center mb-4 relative h-20 col-span-2 flex items-center justify-center'>
+      <div className='w-full h-full mt-1 rounded-full text-center mb-4 relative col-span-2 flex items-center justify-center'>
         <Image
           className='rounded-full'
           src={user.photoUrl}
@@ -20,12 +37,13 @@ const UserCard = ({ user }: UserCardProps) => {
         />
       </div>
       <div className='flex flex-col ml-4 mt-2 col-span-10'>
-        <div className='flex'>
+        <div className={divClasses[layout]}>
           <h3>{user.name}</h3>
-          <div className='text-md ml-2 text-gray-600 cursor-pointer'>
+          <div className={linkClasses[layout]}>
             <Link href={`/users/${user.username}`}>@{user.username}</Link>
           </div>
         </div>
+        {children}
       </div>
     </div>
   );
