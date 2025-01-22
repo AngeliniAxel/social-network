@@ -1,4 +1,4 @@
-import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url';
+import { URLSearchParams } from 'url';
 
 const API_URL = 'http://localhost:8080/api';
 const API_PUBLIC_ENDPOINT = `/public`;
