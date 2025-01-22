@@ -1,17 +1,13 @@
 import UserTabs from '@/app/components/users/UserTabs';
+import userApi from '@/services/users/users.service';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import {
-  getUserData,
-  getUserMessageReplies,
-  getUserMessages,
-} from '@/services/api.service';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
-  const userPromise = getUserData(params.username);
-  const userMessagesPromise = getUserMessages(params.username);
-  const userMessageRepliesPromise = getUserMessageReplies(params.username);
+  const userPromise = userApi.getUserData(params.username);
+  const userMessagesPromise = userApi.getUserMessages(params.username);
+  const userMessageRepliesPromise = userApi.getUserMessageReplies(params.username);
 
   const [user, userMessages, userMessageReplies] = await Promise.all([
     userPromise,
@@ -38,20 +34,15 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         <div className='mb-4'>{user.bio}</div>
         <div className='flex justify-between mb-4'>
           <div>
-            <span className='font-semibold'>{user.followersCount}</span>{' '}
-            Followers
+            <span className='font-semibold'>{user.followersCount}</span> Followers
           </div>
           <div>
-            <span className='font-semibold'>{user.followingCount}</span>{' '}
-            Following
+            <span className='font-semibold'>{user.followingCount}</span> Following
           </div>
         </div>
       </section>
 
-      <UserTabs
-        messages={userMessages.content}
-        replies={userMessageReplies.content}
-      />
+      <UserTabs messages={userMessages.content} replies={userMessageReplies.content} />
     </main>
   );
 };
