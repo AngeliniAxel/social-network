@@ -1,4 +1,5 @@
 import exploreApi from '@/services/explore/explore.service';
+import Link from 'next/link';
 import { FC, PropsWithChildren } from 'react';
 import ExploreTrending from '../components/explore/ExploreTrending';
 import ExploreUsers from '../components/explore/ExploreUsers';
@@ -26,7 +27,12 @@ const UsersLayout: FC<PropsWithChildren> = async ({ children }) => {
         <div className='mb-4'>
           <ExploreTrending hashes={hashes.content} />
         </div>
-        <ExploreUsers users={users.content} />
+        <div className='mb-4'>
+          <ExploreUsers users={users.content} />
+        </div>
+        <Link href='/faq'>
+          <div className='link-primary'>FAQ</div>
+        </Link>
       </div>
     </div>
   );
