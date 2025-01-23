@@ -1,11 +1,14 @@
+import faqsApi from '@/services/faqs/faqs.service';
 import FAQSection from '../components/faq/FAQSection';
 
-const FAQPage = () => {
+const FAQPage = async () => {
+  const faqPages = await faqsApi.getFAQPages();
+
   return (
     <div>
       {' '}
       <main>
-        <FAQSection />
+        <FAQSection sections={faqPages.data} />
       </main>
     </div>
   );
