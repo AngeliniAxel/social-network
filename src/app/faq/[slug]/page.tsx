@@ -1,4 +1,4 @@
-import FAQSection from '../components/faq/FAQSection';
+import FAQSection from '@/app/components/faq/FAQSection';
 
 const FAQPage = () => {
   return (
@@ -6,6 +6,9 @@ const FAQPage = () => {
       {' '}
       <main>
         <FAQSection />
+        <section className='flex flex-col'>
+          <h2>Seccion 1</h2>
+        </section>
       </main>
     </div>
   );
