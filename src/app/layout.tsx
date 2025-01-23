@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Alegreya, Mulish } from 'next/font/google';
-import Link from 'next/link';
+import Navbar from './components/layout/Navbar';
 import './globals.css';
 
 const mulish = Mulish({
@@ -26,14 +26,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${mulish.variable} ${alegreya.variable}`}>
-        <header>
-          <nav>
-            <div>
-              <Link href='/explore'>LOGO</Link>{' '}
-            </div>
-          </nav>
-        </header>
-
+        <Navbar />
         {children}
       </body>
     </html>
