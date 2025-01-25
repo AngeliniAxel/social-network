@@ -1,6 +1,6 @@
 'use client';
 import { MessageType } from '@/app/types/message.type';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Message from '../messages/Message';
 
 enum TabView {
@@ -18,7 +18,7 @@ const UserTabs = ({ messages, replies }: UserTabsProps) => {
 
   return (
     <div>
-      <div className='flex justify-evenly mb-4'>
+      <div className='flex justify-evenly mb-4 w-full'>
         <div
           className={`cursor-pointer border-b-4 ${
             tab === TabView.MESSAGES ? 'border-blue-400' : ''
@@ -36,15 +36,11 @@ const UserTabs = ({ messages, replies }: UserTabsProps) => {
           Replies
         </div>
       </div>
-      <div>
+      <div className='flex w-full flex-col'>
         {tab === TabView.MESSAGES &&
-          messages.map((message, index) => (
-            <Message key={`${index}`} message={message} />
-          ))}
+          messages.map((message, index) => <Message key={`${index}`} message={message} />)}
         {tab === TabView.REPLIES &&
-          replies.map((message, index) => (
-            <Message key={`${index}`} message={message} />
-          ))}
+          replies.map((message, index) => <Message key={`${index}`} message={message} />)}
       </div>
     </div>
   );
