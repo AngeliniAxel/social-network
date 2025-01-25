@@ -1,8 +1,7 @@
-import { httpGetPublic } from '../common/http.service';
-import { PageType } from '@/app/types/pagination.types';
 import { TrendingHashtag } from '@/app/types/hash.types';
-import { URLSearchParams } from 'url';
+import { PageType } from '@/app/types/pagination.types';
 import { TrendingUserType } from '@/app/types/user.types';
+import { httpGetPublic } from '../common/http.service';
 
 class ExploreApi {
   getTrendingHashtags = async (page: number, size: number): Promise<PageType<TrendingHashtag>> =>
