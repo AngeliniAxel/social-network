@@ -1,7 +1,12 @@
-import React from 'react';
+import LoginForm from '../components/auth/LoginForm';
 
 const LoginPage = () => {
-  return <div>Pagina de inicio de sesion</div>;
+  return (
+    <div className='flex items-center w-full flex-col'>
+      <h2 className='mb-4'>Login to social network</h2>
+      <LoginForm />
+    </div>
+  );
 };
 
 export default LoginPage;

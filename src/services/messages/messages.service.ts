@@ -18,8 +18,8 @@ class MessageApi {
       new URLSearchParams({ page: `${page}`, size: `${size}` })
     );
 
-  PostMessage = async (message: string): Promise<MessageType> =>
-    httpPost(`/messages`, { message: message });
+  PostMessage = async (message: string, parentId?: string): Promise<MessageType> =>
+    httpPost(`/messages`, { message: message, parentId: parentId ?? null });
 }
 
 const messageApi = new MessageApi();
