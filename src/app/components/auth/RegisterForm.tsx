@@ -27,11 +27,7 @@ const RegisterForm = () => {
     resolver: yupResolver(schema),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = (data: FormData) => {
     console.log(JSON.stringify(data));
