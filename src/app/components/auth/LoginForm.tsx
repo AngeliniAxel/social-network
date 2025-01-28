@@ -32,8 +32,8 @@ const LoginForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <InputText type='text' label={'Username'} fieldName={'username'} placeholder='Anakin' />
-        <InputText type='password' label={'Password'} fieldName={'password'} styles='mt-4' />
+        <InputText type='text' label={'Username:'} fieldName={'username'} placeholder='Anakin' />
+        <InputText type='password' label={'Password:'} fieldName={'password'} styles='mt-4' />
         <SubmitButton label={'Login'} onSubmit={onSubmit} styles='mt-4' />
       </form>
     </FormProvider>

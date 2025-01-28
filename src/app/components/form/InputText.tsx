@@ -16,7 +16,7 @@ const InputText = ({ label, fieldName, placeholder, styles, type }: InputTextPro
 
   return (
     <div className={`flex flex-col ${styles ?? ''}`}>
-      <label className='mb-2'>{label}:</label>
+      <label className='mb-2'>{label}</label>
       <input
         {...register(fieldName)}
         className=' p-4 mb-4 rounded bg-gray-50 border border-gray-200'
