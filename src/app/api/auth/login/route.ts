@@ -1,6 +1,8 @@
 import authApi from '@/services/auth/auth.service';
 import { AccessDeniedError } from '@/services/common/http.errors';
 import { NextResponse, type NextRequest } from 'next/server';
+import { createClient } from 'redis';
+import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 const schema = yup
@@ -10,12 +12,24 @@ const schema = yup
   })
   .required();
 
+const client = createClient({
+  url: 'redis://default:SocialNetworkPass@localhost:6379',
+});
+
+client.connect().then(() => {
+  console.log('connected to redis');
+});
+
+const ONE_MINUTE = 60;
+
 export async function POST(request: NextRequest) {
   const { username, password } = await schema.validate(await request.json());
   try {
     const loginResponse = await authApi.login(username, password);
 
-    const sessionId = loginResponse.accessToken;
+    const sessionId = uuidv4();
+
+    client.set(sessionId, loginResponse.accessToken, { EX: ONE_MINUTE });
 
     return NextResponse.json({ sessionId, username });
   } catch (e) {
