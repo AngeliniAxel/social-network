@@ -1,18 +1,63 @@
+import { MessageType } from '@/app/types/message.type';
+import { PageType } from '@/app/types/pagination.types';
 import messageApi from '@/services/messages/messages.service';
-import { createContext, FC, PropsWithChildren, useContext, useMemo } from 'react';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
-export type MessageState = {};
+export type MessageState = {
+  message?: MessageType;
+  messagePage: PageType<MessageType>;
+  postMessage: (message: string, parentId?: string) => void;
+};
 
 const MessageContext = createContext<MessageState | undefined>(undefined);
 
-type MessageProviderProps = PropsWithChildren & {};
+type MessageProviderProps = PropsWithChildren & {
+  initialPage: PageType<MessageType>;
+  initialMessage?: MessageType;
+};
 
-export const MessageProvider: FC<MessageProviderProps> = ({ children }: MessageProviderProps) => {
-  const postMessage = async (message: string, parentId: string) => {
-    const response = await messageApi.PostMessage(message, parentId);
-  };
+export const MessageProvider: FC<MessageProviderProps> = ({
+  initialPage,
+  initialMessage,
+  children,
+}: MessageProviderProps) => {
+  const [messagePage, setMessagePage] = useState<PageType<MessageType>>(initialPage);
 
-  const value = useMemo(() => ({}), []);
+  const [message, setMessage] = useState<MessageType | undefined>(initialMessage);
+
+  const postMessage = useCallback(
+    async (textMessage: string, parentId?: string) => {
+      const response = await messageApi.postMessage(textMessage, parentId);
+      setMessagePage({
+        ...messagePage,
+        content: [response, ...messagePage.content],
+      });
+      if (message && message.id === parentId) {
+        setMessage({
+          ...message,
+          repliesCount: message.repliesCount + 1,
+        });
+      }
+    },
+    [messagePage, message]
+  );
+
+  const value = useMemo(
+    () => ({
+      message,
+      messagePage,
+      postMessage,
+    }),
+    [messagePage, postMessage, message]
+  );
 
   return <MessageContext.Provider value={value}> {children}</MessageContext.Provider>;
 };

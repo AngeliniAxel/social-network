@@ -18,7 +18,7 @@ class MessageApi {
       new URLSearchParams({ page: `${page}`, size: `${size}` })
     );
 
-  PostMessage = async (message: string, parentId?: string): Promise<MessageType> =>
+  postMessage = async (message: string, parentId?: string): Promise<MessageType> =>
     httpPost(`/messages`, { message: message, parentId: parentId ?? null });
 
   getMessagesByHash = async (
