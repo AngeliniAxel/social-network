@@ -25,14 +25,14 @@ const TEN_MINUTES = 60 * 10;
 export async function POST(request: NextRequest) {
   const { username, password } = await schema.validate(await request.json());
   try {
-    const loginResponse = await authApi.login(username, password);
+    const loginResponse = await authApi.loginInternal(username, password);
     const sessionId = uuidv4();
     const now = new Date();
     const expireAt = new Date(now.getTime() + TEN_MINUTES * 1000).toUTCString();
 
     client.set(sessionId, loginResponse.accessToken, { EX: TEN_MINUTES });
 
-    const authCookie = `SocialSessionID=${sessionId}; Expires=${expireAt} Domain=localhost; Secure: httpOnly`;
+    const authCookie = `SocialSessionID=${sessionId}; Expires=${expireAt}; Domain=localhost; Secure; HttpOnly`;
 
     return new Response(JSON.stringify(loginResponse.user), {
       status: 200,

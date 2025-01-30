@@ -1,32 +1,36 @@
 import { MessageType } from '@/app/types/message.type';
 import { PageType } from '@/app/types/pagination.types';
-import { httpGetPublic, httpPost } from '../common/http.service';
+import httpInternalApi from '../common/http.internal.service';
 
 class MessageApi {
   getMessageFeed = async (page: number, size: number): Promise<PageType<MessageType>> =>
-    httpGetPublic(`/messages/feed`, new URLSearchParams({ page: `${page}`, size: `${size}` }));
+    httpInternalApi.httpGetPublic(
+      `/messages/feed`,
+      new URLSearchParams({ page: `${page}`, size: `${size}` })
+    );
 
-  getMessage = async (id: string): Promise<MessageType> => httpGetPublic(`/messages/${id}`);
+  getMessage = async (id: string): Promise<MessageType> =>
+    httpInternalApi.httpGetPublic(`/messages/${id}`);
 
   getMessageReplies = async (
     id: string,
     page: number,
     size: number
   ): Promise<PageType<MessageType>> =>
-    httpGetPublic(
+    httpInternalApi.httpGetPublic(
       `/messages/${id}/replies`,
       new URLSearchParams({ page: `${page}`, size: `${size}` })
     );
 
   postMessage = async (message: string, parentId?: string): Promise<MessageType> =>
-    httpPost(`/messages`, { message: message, parentId: parentId ?? null });
+    httpInternalApi.httpPost(`/messages`, { message: message, parentId: parentId ?? null });
 
   getMessagesByHash = async (
     hashtag: string,
     page: number,
     size: number
   ): Promise<PageType<MessageType>> =>
-    httpGetPublic(
+    httpInternalApi.httpGetPublic(
       `/messages/hash/${hashtag}`,
       new URLSearchParams({ page: `${page}`, size: `${size}` })
     );
