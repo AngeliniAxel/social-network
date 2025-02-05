@@ -8,7 +8,7 @@ import Menu from '../components/menu/Menu';
 const LINKS = [
   { title: 'Home', href: '/' },
   { title: 'Explore', href: '/explore' },
-  { title: 'Profile', href: '/my-profile' },
+  { title: 'Profile', href: '/profile' },
 ];
 
 const UsersLayout: FC<PropsWithChildren> = async ({ children }) => {

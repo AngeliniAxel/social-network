@@ -4,6 +4,8 @@ import { UserType } from '@/app/types/user.types';
 import httpInternalApi from '../common/http.internal.service';
 
 class UserApi {
+  getMeInternal = async (accessToken: string): Promise<UserType> =>
+    httpInternalApi.httpGet(`/me`, undefined, accessToken);
   getUserData = async (username: string): Promise<UserType> =>
     httpInternalApi.httpGetPublic(`/users/${username}`);
   getUserMessages = async (username: string): Promise<PageType<MessageType>> =>

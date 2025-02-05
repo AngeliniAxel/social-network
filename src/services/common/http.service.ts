@@ -10,11 +10,21 @@ export class HttpBaseApi {
     this.publicEndpointSuffix = publicEndpointSuffix;
   }
 
-  async httpGet<T>(endpointSuffix: string, params?: URLSearchParams): Promise<T> {
+  async httpGet<T>(
+    endpointSuffix: string,
+    params?: URLSearchParams,
+    accessToken?: string
+  ): Promise<T> {
     const res = await fetch(
       `${this.privateEndpoint}${endpointSuffix}${params ? `?${params}` : ''}`,
       {
         cache: 'no-cache',
+        headers: !accessToken
+          ? { 'content-type': 'application/json' }
+          : {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
       }
     );
 
@@ -29,17 +39,15 @@ export class HttpBaseApi {
     return this.httpGet(`${this.publicEndpointSuffix}${endpointSuffix}`, params);
   }
 
-  async httpPost<T>(endpointSuffix: string, body: object): Promise<T> {
+  async httpPost<T>(endpointSuffix: string, body: object, accessToken?: string): Promise<T> {
     const res = await fetch(`${this.privateEndpoint}${endpointSuffix}`, {
       method: 'POST',
-      /* headers: skipAuthorization
+      headers: !accessToken
         ? { 'content-type': 'application/json' }
         : {
             'content-type': 'application/json',
-            Authorization:
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJzb2NpYWwtYXBpIiwiaWF0IjoxNjkxNTE2NDMwLCJ1c2VybmFtZSI6InlvZGEifQ.pg4lkBK2wlEorNrThDFqkC7l5uHrpZTJAYp4De4629c',
-          }, */
-      headers: { 'content-type': 'application/json' },
+            Authorization: `Bearer ${accessToken}`,
+          },
       body: JSON.stringify(body),
     });
     if (!res.ok) {

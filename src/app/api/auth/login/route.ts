@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     client.set(sessionId, loginResponse.accessToken, { EX: TEN_MINUTES });
 
-    const authCookie = `SocialSessionID=${sessionId}; Expires=${expireAt}; Domain=localhost; Secure; HttpOnly`;
+    const authCookie = `SocialSessionID=${sessionId}; Expires=${expireAt}; Domain=localhost; Secure; HttpOnly; Path=/`;
 
     return new Response(JSON.stringify(loginResponse.user), {
       status: 200,
